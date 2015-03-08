@@ -121,7 +121,7 @@ In this example my office hours are Mon-Fri from 07:00 until 17:00.
 Every 30 minutes we will need to run this script, to do so you can achieve it by creating a Cron Job.
 
 ```
-*/30 * * * *	php -q /path/to/the/script/business_hours.php
+*/30 * * * *	php /path/to/the/script/business_hours.php
 ```
 
 ### Credits & Extra info
