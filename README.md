@@ -4,9 +4,9 @@ With this script you can automatically change the voicemail greeting for every n
 
 ## Summary
 
-1. [Edit the bh-config.php](#edit-the-bh-configphp).
-2. [Create a Cron Job that will run every 30 minutes](#create-a-cron-job-that-will-run-every-30-minutes).
-3. [Credits & Extra info](#credits-&-extra-info).
+1. Edit the bh-config.php
+2. Create a Cron Job that will run every 30 minutes
+3. Credits & Extra info
 
 ### 1.Edit the bh-config.php
 
