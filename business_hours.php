@@ -8,34 +8,44 @@ $current_datetime = new DateTime('NOW');
 $hour = $current_datetime->format('H:i');
 $day_week = $current_datetime->format('w');
 
+echo "Current day of the week: " . $day_week ."\n";
+
 $key = array_search($hour, $business_hours[$day_week]);
-echo "Script started";
-echo "<br/>";
+echo "Script started\n";
 
 if($key){
 	// Retrieve all numbers
 	$data = curlWrap("/channels/voice/phone_numbers.json",NULL,"GET");
 		echo ($key == "start")? "Opening the office...": "Closing the office...";
-		echo "<br/>";
+		echo "\n";
 		
 		foreach ($data->phone_numbers as $phone_number) {
 			//Put request /api/v2/channels/voice/phone_numbers/{id}.json
 			$u = "/channels/voice/phone_numbers/".$phone_number->id.".json";
 			//Replace the value
 			echo "Setting the voicemail for number ".$phone_number->number;
-			echo "<br/>";
+			echo "\nCurrent greetings:\n";
+			var_dump($phone_number->greeting_ids);
+			echo "\nEnd of current Greetings\n";
 			if($key=='start'){
 				$greetings = array_diff($phone_number->greeting_ids, [START_GREETING]);
 				$greetings[] = END_GREETING;
+				echo "Setting up the start of the day voicemail\n";
 			}else{
 				$greetings = array_diff($phone_number->greeting_ids, [END_GREETING]);
-				$greetings[] = START_GREETING;	
+				$greetings[] = START_GREETING;
+				echo "Setting up the end of the day voicemail\n";
 			}
 			$g = array("greeting_ids" => $greetings);
+			echo "I'm passing this data:\n";
+			var_dump($g);
+			echo "end of passing data\n";
+
+
 			curlWrap($u,json_encode($g),"PUT");
 		}
 }else{
-	echo "It's not time to change the voicemail greeting.";
+	echo "It's not time to change the voicemail greeting.\n";
 }
 
 function curlWrap($url, $json, $action)
